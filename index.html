@@ -9,6 +9,9 @@
    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+</body>
+
 </head>
 <body>
    <header style="position: relative;">
@@ -715,7 +718,7 @@
             </div>
           </div>
        <section id="recarga tigo">
-        <h2>recarga tigo</h2>
+        <h2>rga tigo</h2>
         <div class="product-container">
         <div class="product-item">
             <img src="https://i.ibb.co/993rpF8h/OIP.jpg" alt="recarga tigo 10 bs">
@@ -1216,3 +1219,52 @@
     }
   });
 </script>
+<!-- Modal para elegir método de pago -->
+<div id="buyModal" class="modal">
+  <div class="modal-content">
+    <span class="close" aria-label="Cerrar modal">&times;</span>
+    <h2>Selecciona método de pago</h2>
+
+    <select id="paymentMethod">
+      <option disabled selected>Elige una opción</option>
+      <option value="BNB">BNB</option>
+      <option value="Tigo Money">Tigo Money</option>
+      <option value="Yape">Yape</option>
+    </select>
+
+    <div id="qrDisplay"></div>
+
+    <div class="modal-footer">
+      <button id="sendWhatsApp" class="btn btn-buy" disabled>Enviar Comprobante por WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Términos y Condiciones -->
+<div id="terminosModal" class="modal">
+  <div class="modal-content">
+    <h2>Términos y Condiciones</h2>
+    <div class="terminos-texto">
+      <p>Al acceder y utilizar este sitio web, el usuario acepta quedar obligado por los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te solicitamos no utilizar este sitio.</p>
+      <h3>Servicios Ofrecidos</h3>
+      <p>Ofrecemos productos digitales como licencias de software (Windows, Microsoft Office, entre otros), recargas electrónicas (Entel, Tigo, Viva), juegos y códigos digitales, y otros productos virtuales entregados electrónicamente. Es responsabilidad del usuario proporcionar correctamente sus datos.</p>
+      <h3>Entrega y Validación</h3>
+      <p>Una vez realizada la compra y confirmado el pago, el producto será entregado electrónicamente en un plazo de hasta 24 horas. El cliente debe revisar inmediatamente el producto al recibirlo. Después de la entrega, no se aceptan cambios ni devoluciones, salvo producto incorrecto o código inválido.</p>
+      <h3>Uso Correcto</h3>
+      <p>El cliente se compromete a usar los productos de forma legal y conforme a las políticas del proveedor. No nos hacemos responsables por mal uso o errores del cliente.</p>
+      <h3>Limitación de Responsabilidad</h3>
+      <p>No nos responsabilizamos por daños o perjuicios derivados del uso indebido, fallas en dispositivos o pérdida de acceso.</p>
+      <h3>Sin derecho a reclamo posterior</h3>
+      <p>Una vez entregado y verificado el producto, no habrá derecho a reclamos por motivos no atribuibles a nosotros.</p>
+      <h3>Cambios en los Términos</h3>
+      <p>Nos reservamos el derecho de modificar estos términos en cualquier momento.</p>
+      <h3>Legislación Aplicable</h3>
+      <p>Estos términos se rigen por las leyes del Estado Plurinacional de Bolivia.</p>
+    </div>
+
+    <div class="modal-buttons">
+      <button onclick="aceptarTerminos()" class="btn btn-aceptar">Aceptar</button>
+      <button onclick="rechazarTerminos()" class="btn btn-rechazar">Rechazar</button>
+    </div>
+  </div>
+</div>
