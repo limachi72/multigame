@@ -147,7 +147,7 @@
                 <p class="product-price">60 BS Bs | 6 $</p>
                 <div class="btn-container">
                     <a href="https://wa.me/59172386302?text=Quiero%20más%20detalles%20de%20Windows%208.1%20Pro" class="btn btn-details">📃 Detalles</a>
-                    <a href="" class="btn btn-buy">Comprar</a>
+                    <a href="#" class="btn btn-buy">Comprar</a>
                 </div>
             </div>
     
@@ -950,7 +950,7 @@
     width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); 
     justify-content: center; align-items: center;">
   <div class="modal-content" style="background: white; padding: 20px; border-radius: 10px; max-width: 400px; width: 90%;">
-    <span class="close" style="float: right; cursor: pointer;">&times;</span>
+    <span class="close" style="float: right; cursor: pointer;" aria-label="Cerrar modal">&times;</span>
     <h2>Selecciona método de pago</h2>
 
     <select id="paymentMethod" style="width: 100%; padding: 10px;">
@@ -966,90 +966,110 @@
   <button id="sendWhatsApp" class="btn btn-buy">
     Enviar Comprobante por WhatsApp
   </button>
+    </div>
   </div>
 </div>
+
+
 <script>
   let currentProduct = {
     title: '',
     price: ''
   };
 
-  // Detecta los botones "Comprar"
+  // Detecta todos los botones "Comprar" y les agrega evento para abrir modal
   document.querySelectorAll('.btn-buy').forEach(btn => {
     btn.addEventListener('click', function(e) {
-      e.preventDefault();
+      e.preventDefault(); // Evita que el enlace navegue
 
+      // Busca el contenedor que tiene la información del producto
       const productCard = btn.closest('.product-item');
+      if (!productCard) return;
+
+      // Obtiene el título y precio del producto
       currentProduct.title = productCard.querySelector('.product-title').innerText;
       currentProduct.price = productCard.querySelector('.product-price').innerText;
 
-      document.getElementById('buyModal').style.display = 'flex';
+      // Muestra el modal cambiando su estilo
+      const modal = document.getElementById('buyModal');
+      if (modal) modal.style.display = 'flex';
+
+      // Limpia selección previa
+      const paymentSelect = document.getElementById('paymentMethod');
+      const qrDiv = document.getElementById('qrDisplay');
+      const sendBtn = document.getElementById('sendWhatsApp');
+      if (paymentSelect) paymentSelect.selectedIndex = 0;
+      if (qrDiv) qrDiv.innerHTML = '';
+      if (sendBtn) sendBtn.disabled = true;
     });
   });
 
-  // Cierra el modal
+  // Cierra el modal al hacer clic en el botón cerrar
   document.querySelector('.close').addEventListener('click', () => {
-    document.getElementById('buyModal').style.display = 'none';
-    document.getElementById('qrDisplay').innerHTML = '';
-    document.getElementById('paymentMethod').selectedIndex = 0;
+    closeModal();
   });
 
-  // Muestra el QR según el método elegido
-  document.getElementById('paymentMethod').addEventListener('change', function() {
-    const method = this.value;
-    const qrMap = {
-      "BNB": "https://i.ibb.co/qLKP1Jm5/IMG-20250525-WA0000.jpg",          // REEMPLAZA por tu imagen QR real de BNB
-      "Tigo Money": "https://i.ibb.co/67hBspQ1/IMG-20250525-WA0001.jpg",  // REEMPLAZA por tu QR de Tigo Money
-      "Yape": "https://i.ibb.co/XYZYAPE.png"         // REEMPLAZA por tu QR de Yape
-    };
-
-    const qrHTML = `
-      <p>Escanea el QR de <strong>${method}</strong> para pagar:</p>
-      <img src="${qrMap[method]}" alt="QR de ${method}" style="width: 200px; display: block; margin: 10px auto">
-      </div>
-    `;
-    document.getElementById('qrDisplay').innerHTML = qrHTML;
-  });
-
-  // Enviar WhatsApp después del pago
-  document.getElementById('sendWhatsApp').addEventListener('click', function() {
-    const method = document.getElementById('paymentMethod').value;
-    if (!method) {
-      alert("Por favor selecciona un método de pago.");
-      return;
-    }
-
-    const msg = `Hola, quiero confirmar la compra de *${currentProduct.title}* por *${currentProduct.price}*.\n\nHe pagado con *${method}*. Aquí adjunto el comprobante.`;
-
-    const url = `https://wa.me/59172386302?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
-  });
-
-  // Cerrar modal al hacer clic afuera
+  // Cierra el modal si haces clic fuera del contenido
   window.onclick = function(e) {
     const modal = document.getElementById('buyModal');
     if (e.target == modal) {
-      modal.style.display = "none";
-      document.getElementById('qrDisplay').innerHTML = '';
+      closeModal();
     }
+  };
+
+  // Cierra el modal con la tecla Escape
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+
+  function closeModal() {
+    const modal = document.getElementById('buyModal');
+    if (modal) modal.style.display = 'none';
+
+    const qrDiv = document.getElementById('qrDisplay');
+    if (qrDiv) qrDiv.innerHTML = '';
+
+    const paymentSelect = document.getElementById('paymentMethod');
+    if (paymentSelect) paymentSelect.selectedIndex = 0;
   }
-</script>
-<script>
-  const toggle = document.getElementById('menuToggle');
-  const menu = document.getElementById('popupMenu');
 
-  toggle.addEventListener('click', () => {
-    // Mostrar u ocultar el menú
-    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
-  });
+  // Muestra el QR y activa botón cuando se elige un método de pago
+  document.getElementById('paymentMethod').addEventListener('change', function() {
+    const method = this.value;
+    const qrMap = {
+      "BNB": "https://i.ibb.co/qLKP1Jm5/IMG-20250525-WA0000.jpg",
+      "Tigo Money": "https://i.ibb.co/67hBspQ1/IMG-20250525-WA0001.jpg",
+      "Yape": "https://i.ibb.co/XYZYAPE.png"
+    };
 
-  // Cierra el menú si haces clic fuera
-  window.addEventListener('click', (e) => {
-    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-      menu.style.display = 'none';
+    const qrDiv = document.getElementById('qrDisplay');
+    const sendBtn = document.getElementById('sendWhatsApp');
+
+    if (method && qrMap[method]) {
+      qrDiv.innerHTML = `<p>Escanea el QR de <strong>${method}</strong> para pagar:</p>
+                         <img src="${qrMap[method]}" alt="QR de ${method}" style="width: 200px; display: block; margin: 10px auto">`;
+      sendBtn.disabled = false;
+    } else {
+      qrDiv.innerHTML = '';
+      sendBtn.disabled = true;
     }
   });
+
+  // Enviar mensaje WhatsApp con info de compra y método de pago
+  document.getElementById('sendWhatsApp').addEventListener('click', function() {
+    const method = document.getElementById('paymentMethod').value;
+    if (!method) {
+      alert('Por favor selecciona un método de pago.');
+      return;
+    }
+    const msg = `Hola, quiero confirmar la compra de *${currentProduct.title}* por *${currentProduct.price}*.\nHe pagado con *${method}*. Aquí adjunto el comprobante.`;
+    const url = `https://wa.me/59172386302?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  });
 </script>
+
 <!-- Modal de Términos y Condiciones -->
 <div id="terminosModal" class="modal" style="display: none;">
   <div class="modal-content">
@@ -1172,4 +1192,27 @@
       alert("Gracias por tu compra.");
     }
   }
+</script>
+
+<script>
+  // Selecciona el ícono del menú y el menú emergente
+  const menuToggle = document.getElementById('menuToggle');
+  const popupMenu = document.getElementById('popupMenu');
+
+  // Agrega un evento de clic al ícono del menú
+  menuToggle.addEventListener('click', function() {
+    // Alterna la visibilidad del menú emergente
+    if (popupMenu.style.display === 'none' || popupMenu.style.display === '') {
+      popupMenu.style.display = 'block'; // Muestra el menú
+    } else {
+      popupMenu.style.display = 'none'; // Oculta el menú
+    }
+  });
+
+  // Cierra el menú si se hace clic fuera de él
+  window.addEventListener('click', function(event) {
+    if (!menuToggle.contains(event.target) && !popupMenu.contains(event.target)) {
+      popupMenu.style.display = 'none'; // Oculta el menú
+    }
+  });
 </script>
