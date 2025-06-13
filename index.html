@@ -9,10 +9,8 @@
    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
-</body>
-
 </head>
+
 <body>
    <header style="position: relative;">
   <div style="display: flex; align-items: center; gap: 10px; padding: 10px; font-family: 'Montserrat', sans-serif;">
@@ -718,7 +716,7 @@
             </div>
           </div>
        <section id="recarga tigo">
-        <h2>rga tigo</h2>
+        <h2>recarga tigo</h2>
         <div class="product-container">
         <div class="product-item">
             <img src="https://i.ibb.co/993rpF8h/OIP.jpg" alt="recarga tigo 10 bs">
@@ -940,331 +938,132 @@
                     <a href="https://wa.me/59172386302?text=Quiero%20comprar%20Eset%20Smart%20Security%201%20Dispositivo%20-%202%20Años" class="btn btn-buy">Comprar</a>
                 </div>
             </div>
-            <!-- Modal de compra -->
-
-  <!-- Footer -->
-    <footer>
        
- <p>&copy; 2024 Siglo XX - Todos los derechos reservados</p>
-    </footer>
-    
-<!-- Modal para elegir método de pago -->
-<div id="buyModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; 
-    width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); 
-    justify-content: center; align-items: center;">
-  <div class="modal-content" style="background: white; padding: 20px; border-radius: 10px; max-width: 400px; width: 90%;">
-    <span class="close" style="float: right; cursor: pointer;" aria-label="Cerrar modal">&times;</span>
-    <h2>Selecciona método de pago</h2>
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compra y Términos</title>
+  <style>
+    /* Aquí va el CSS igual que antes */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      display: none;
+    }
 
-    <select id="paymentMethod" style="width: 100%; padding: 10px;">
-      <option disabled selected>Elige una opción</option>
-      <option value="BNB">BNB</option>
-      <option value="Tigo Money">Tigo Money</option>
-      <option value="Yape">Yape</option>
-    </select>
+    .modal-content {
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-family: 'Segoe UI', sans-serif;
+      animation: fadeIn 0.3s ease-in-out;
+    }
 
-    <div id="qrDisplay" style="margin-top: 15px;"></div>
+    .modal-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-evenly;
+      gap: 15px;
+    }
 
-    <div style="text-align: center; margin-top: 20px;">
-  <button id="sendWhatsApp" class="btn btn-buy">
-    Enviar Comprobante por WhatsApp
-  </button>
+    .btn {
+      flex: 1;
+      padding: 10px 0;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-aceptar {
+      background-color: #198754;
+    }
+
+    .btn-aceptar:hover {
+      background-color: #157347;
+    }
+
+    .btn-rechazar {
+      background-color: #dc3545;
+    }
+
+    .btn-rechazar:hover {
+      background-color: #bb2d3b;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2024 Siglo XX - Todos los derechos reservados</p>
+  </footer>
+
+  <!-- Modal para método de pago -->
+  <div id="buyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="buyModalTitle">
+    <div class="modal-content">
+      <span class="close" style="float: right; cursor: pointer;" aria-label="Cerrar modal">×</span>
+      <h2 id="buyModalTitle">Selecciona método de pago</h2>
+      <select id="paymentMethod" aria-describedby="paymentHelp">
+        <option disabled selected>Elige una opción</option>
+        <option value="BNB">BNB</option>
+        <option value="Tigo Money">Tigo Money</option>
+        <option value="Yape">Yape</option>
+      </select>
+      <div id="qrDisplay" aria-live="polite" style="margin-top: 15px;"></div>
+      <div class="modal-footer" style="margin-top: 15px;">
+        <button id="sendWhatsApp" class="btn btn-buy" disabled>Enviar Comprobante por WhatsApp</button>
+      </div>
     </div>
   </div>
-</div>
 
-
-<script>
-  let currentProduct = {
-    title: '',
-    price: ''
-  };
-
-  // Detecta todos los botones "Comprar" y les agrega evento para abrir modal
-  document.querySelectorAll('.btn-buy').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault(); // Evita que el enlace navegue
-
-      // Busca el contenedor que tiene la información del producto
-      const productCard = btn.closest('.product-item');
-      if (!productCard) return;
-
-      // Obtiene el título y precio del producto
-      currentProduct.title = productCard.querySelector('.product-title').innerText;
-      currentProduct.price = productCard.querySelector('.product-price').innerText;
-
-      // Muestra el modal cambiando su estilo
-      const modal = document.getElementById('buyModal');
-      if (modal) modal.style.display = 'flex';
-
-      // Limpia selección previa
-      const paymentSelect = document.getElementById('paymentMethod');
-      const qrDiv = document.getElementById('qrDisplay');
-      const sendBtn = document.getElementById('sendWhatsApp');
-      if (paymentSelect) paymentSelect.selectedIndex = 0;
-      if (qrDiv) qrDiv.innerHTML = '';
-      if (sendBtn) sendBtn.disabled = true;
-    });
-  });
-
-  // Cierra el modal al hacer clic en el botón cerrar
-  document.querySelector('.close').addEventListener('click', () => {
-    closeModal();
-  });
-
-  // Cierra el modal si haces clic fuera del contenido
-  window.onclick = function(e) {
-    const modal = document.getElementById('buyModal');
-    if (e.target == modal) {
-      closeModal();
-    }
-  };
-
-  // Cierra el modal con la tecla Escape
-  window.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      closeModal();
-    }
-  });
-
-  function closeModal() {
-    const modal = document.getElementById('buyModal');
-    if (modal) modal.style.display = 'none';
-
-    const qrDiv = document.getElementById('qrDisplay');
-    if (qrDiv) qrDiv.innerHTML = '';
-
-    const paymentSelect = document.getElementById('paymentMethod');
-    if (paymentSelect) paymentSelect.selectedIndex = 0;
-  }
-
-  // Muestra el QR y activa botón cuando se elige un método de pago
-  document.getElementById('paymentMethod').addEventListener('change', function() {
-    const method = this.value;
-    const qrMap = {
-      "BNB": "https://i.ibb.co/qLKP1Jm5/IMG-20250525-WA0000.jpg",
-      "Tigo Money": "https://i.ibb.co/67hBspQ1/IMG-20250525-WA0001.jpg",
-      "Yape": "https://i.ibb.co/XYZYAPE.png"
-    };
-
-    const qrDiv = document.getElementById('qrDisplay');
-    const sendBtn = document.getElementById('sendWhatsApp');
-
-    if (method && qrMap[method]) {
-      qrDiv.innerHTML = `<p>Escanea el QR de <strong>${method}</strong> para pagar:</p>
-                         <img src="${qrMap[method]}" alt="QR de ${method}" style="width: 200px; display: block; margin: 10px auto">`;
-      sendBtn.disabled = false;
-    } else {
-      qrDiv.innerHTML = '';
-      sendBtn.disabled = true;
-    }
-  });
-
-  // Enviar mensaje WhatsApp con info de compra y método de pago
-  document.getElementById('sendWhatsApp').addEventListener('click', function() {
-    const method = document.getElementById('paymentMethod').value;
-    if (!method) {
-      alert('Por favor selecciona un método de pago.');
-      return;
-    }
-    const msg = `Hola, quiero confirmar la compra de *${currentProduct.title}* por *${currentProduct.price}*.\nHe pagado con *${method}*. Aquí adjunto el comprobante.`;
-    const url = `https://wa.me/59172386302?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
-  });
-</script>
-
-<!-- Modal de Términos y Condiciones -->
-<div id="terminosModal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <h2 style="margin-bottom: 15px;">Términos y Condiciones</h2>
-    <div class="terminos-texto" style="max-height: 300px; overflow-y: auto; text-align: left; padding-right: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px;">
-      <p>Al acceder y utilizar este sitio web, el usuario acepta quedar obligado por los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te solicitamos no utilizar este sitio.</p>
-
-      <h3>Servicios Ofrecidos</h3>
-      <p>Ofrecemos productos digitales como licencias de software (Windows, Microsoft Office, entre otros), recargas electrónicas (Entel, Tigo, Viva), juegos y códigos digitales, y otros productos virtuales entregados electrónicamente. Es responsabilidad del usuario proporcionar correctamente sus datos.</p>
-
-      <h3>Entrega y Validación</h3>
-      <p>Una vez realizada la compra y confirmado el pago, el producto será entregado electrónicamente en un plazo de hasta 24 horas. El cliente debe revisar inmediatamente el producto al recibirlo. Después de la entrega, no se aceptan cambios ni devoluciones, salvo producto incorrecto o código inválido.</p>
-
-      <h3>Uso Correcto</h3>
-      <p>El cliente se compromete a usar los productos de forma legal y conforme a las políticas del proveedor. No nos hacemos responsables por mal uso o errores del cliente.</p>
-
-      <h3>Limitación de Responsabilidad</h3>
-      <p>No nos responsabilizamos por daños o perjuicios derivados del uso indebido, fallas en dispositivos o pérdida de acceso.</p>
-
-      <h3>Sin derecho a reclamo posterior</h3>
-      <p>Una vez entregado y verificado el producto, no habrá derecho a reclamos por motivos no atribuibles a nosotros.</p>
-
-      <h3>Cambios en los Términos</h3>
-      <p>Nos reservamos el derecho de modificar estos términos en cualquier momento.</p>
-
-      <h3>Legislación Aplicable</h3>
-      <p>Estos términos se rigen por las leyes del Estado Plurinacional de Bolivia.</p>
-    </div>
-
-    <div class="modal-buttons">
-      <button onclick="aceptarTerminos()" class="btn btn-aceptar">Aceptar</button>
-      <button onclick="rechazarTerminos()" class="btn btn-rechazar">Rechazar</button>
+  <!-- Modal de Términos y Condiciones -->
+  <div id="terminosModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terminosTitle">
+    <div class="modal-content">
+      <h2 id="terminosTitle" style="margin-bottom: 15px;">Términos y Condiciones</h2>
+      <div class="terminos-texto" style="max-height: 300px; overflow-y: auto; text-align: left; padding-right: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px;">
+        <!-- Aquí el texto de términos y condiciones (igual que antes) -->
+        <p>Al acceder y utilizar este sitio web, el usuario acepta quedar obligado por los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te solicitamos no utilizar este sitio.</p>
+        <h3>Servicios Ofrecidos</h3>
+        <p>Ofrecemos productos digitales como licencias de software (Windows, Microsoft Office, entre otros), recargas electrónicas (Entel, Tigo, Viva), juegos y códigos digitales, y otros productos virtuales entregados electrónicamente. Es responsabilidad del usuario proporcionar correctamente sus datos.</p>
+        <h3>Entrega y Validación</h3>
+        <p>Una vez realizada la compra y confirmado el pago, el producto será entregado electrónicamente en un plazo de hasta 24 horas. El cliente debe revisar inmediatamente el producto al recibirlo. Después de la entrega, no se aceptan cambios ni devoluciones, salvo producto incorrecto o código inválido.</p>
+        <h3>Uso Correcto</h3>
+        <p>El cliente se compromete a usar los productos de forma legal y conforme a las políticas del proveedor. No nos hacemos responsables por mal uso o errores del cliente.</p>
+        <h3>Limitación de Responsabilidad</h3>
+        <p>No nos responsabilizamos por daños o perjuicios derivados del uso indebido, fallas en dispositivos o pérdida de acceso.</p>
+        <h3>Sin derecho a reclamo posterior</h3>
+        <p>Una vez entregado y verificado el producto, no habrá derecho a reclamos por motivos no atribuibles a nosotros.</p>
+        <h3>Cambios en los Términos</h3>
+        <p>Nos reservamos el derecho de modificar estos términos en cualquier momento.</p>
+        <h3>Legislación Aplicable</h3>
+        <p>Estos términos se rigen por las leyes del Estado Plurinacional de Bolivia.</p>
+      </div>
+      <div class="modal-buttons">
+        <button onclick="aceptarTerminos()" class="btn btn-aceptar">Aceptar</button>
+        <button onclick="rechazarTerminos()" class="btn btn-rechazar">Rechazar</button>
+      </div>
     </div>
   </div>
-</div>
-<style>
-  .modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    display: none;
-  }
 
-  .modal-content {
-    background: #fff;
-    padding: 25px 20px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 480px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    font-family: 'Segoe UI', sans-serif;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  .modal-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-evenly;
-    gap: 15px;
-  }
-
-  .btn {
-    flex: 1;
-    padding: 10px 0;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .btn-aceptar {
-    background-color: #198754;
-  }
-
-  .btn-aceptar:hover {
-    background-color: #157347;
-  }
-
-  .btn-rechazar {
-    background-color: #dc3545;
-  }
-
-  .btn-rechazar:hover {
-    background-color: #bb2d3b;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-</style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("terminosAceptados")) {
-      document.getElementById("terminosModal").style.display = "flex";
-    }
-  });
-
-  function aceptarTerminos() {
-    localStorage.setItem("terminosAceptados", "true");
-    document.getElementById("terminosModal").style.display = "none";
-  }
-
-  function rechazarTerminos() {
-    alert("Debes aceptar los términos para continuar.");
-    window.location.href = "https://www.google.com";
-  }
-
-  function comprar() {
-    if (!localStorage.getItem("terminosAceptados")) {
-      document.getElementById("terminosModal").style.display = "flex";
-    } else {
-      alert("Gracias por tu compra.");
-    }
-  }
-</script>
-
-<script>
-  // Selecciona el ícono del menú y el menú emergente
-  const menuToggle = document.getElementById('menuToggle');
-  const popupMenu = document.getElementById('popupMenu');
-
-  // Agrega un evento de clic al ícono del menú
-  menuToggle.addEventListener('click', function() {
-    // Alterna la visibilidad del menú emergente
-    if (popupMenu.style.display === 'none' || popupMenu.style.display === '') {
-      popupMenu.style.display = 'block'; // Muestra el menú
-    } else {
-      popupMenu.style.display = 'none'; // Oculta el menú
-    }
-  });
-
-  // Cierra el menú si se hace clic fuera de él
-  window.addEventListener('click', function(event) {
-    if (!menuToggle.contains(event.target) && !popupMenu.contains(event.target)) {
-      popupMenu.style.display = 'none'; // Oculta el menú
-    }
-  });
-</script>
-<!-- Modal para elegir método de pago -->
-<div id="buyModal" class="modal">
-  <div class="modal-content">
-    <span class="close" aria-label="Cerrar modal">&times;</span>
-    <h2>Selecciona método de pago</h2>
-
-    <select id="paymentMethod">
-      <option disabled selected>Elige una opción</option>
-      <option value="BNB">BNB</option>
-      <option value="Tigo Money">Tigo Money</option>
-      <option value="Yape">Yape</option>
-    </select>
-
-    <div id="qrDisplay"></div>
-
-    <div class="modal-footer">
-      <button id="sendWhatsApp" class="btn btn-buy" disabled>Enviar Comprobante por WhatsApp</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal de Términos y Condiciones -->
-<div id="terminosModal" class="modal">
-  <div class="modal-content">
-    <h2>Términos y Condiciones</h2>
-    <div class="terminos-texto">
-      <p>Al acceder y utilizar este sitio web, el usuario acepta quedar obligado por los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te solicitamos no utilizar este sitio.</p>
-      <h3>Servicios Ofrecidos</h3>
-      <p>Ofrecemos productos digitales como licencias de software (Windows, Microsoft Office, entre otros), recargas electrónicas (Entel, Tigo, Viva), juegos y códigos digitales, y otros productos virtuales entregados electrónicamente. Es responsabilidad del usuario proporcionar correctamente sus datos.</p>
-      <h3>Entrega y Validación</h3>
-      <p>Una vez realizada la compra y confirmado el pago, el producto será entregado electrónicamente en un plazo de hasta 24 horas. El cliente debe revisar inmediatamente el producto al recibirlo. Después de la entrega, no se aceptan cambios ni devoluciones, salvo producto incorrecto o código inválido.</p>
-      <h3>Uso Correcto</h3>
-      <p>El cliente se compromete a usar los productos de forma legal y conforme a las políticas del proveedor. No nos hacemos responsables por mal uso o errores del cliente.</p>
-      <h3>Limitación de Responsabilidad</h3>
-      <p>No nos responsabilizamos por daños o perjuicios derivados del uso indebido, fallas en dispositivos o pérdida de acceso.</p>
-      <h3>Sin derecho a reclamo posterior</h3>
-      <p>Una vez entregado y verificado el producto, no habrá derecho a reclamos por motivos no atribuibles a nosotros.</p>
-      <h3>Cambios en los Términos</h3>
-      <p>Nos reservamos el derecho de modificar estos términos en cualquier momento.</p>
-      <h3>Legislación Aplicable</h3>
-      <p>Estos términos se rigen por las leyes del Estado Plurinacional de Bolivia.</p>
-    </div>
-
-    <div class="modal-buttons">
-      <button onclick="aceptarTerminos()" class="btn btn-aceptar">Aceptar</button>
-      <button onclick="rechazarTerminos()" class="btn btn-rechazar">Rechazar</button>
-    </div>
-  </div>
-</div>
+  <!-- Aquí enlazas el JS externo -->
+  <script src="script.js"></script>
+</body>
+</html>

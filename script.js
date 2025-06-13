@@ -1,115 +1,137 @@
-/* Modal general */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
+// Variables para producto actual
+let currentProduct = {
+  title: '',
+  price: ''
+};
+
+// Detecta todos los botones "Comprar" y les agrega evento para abrir modal de pago
+document.querySelectorAll('.btn-buy').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    // Verifica que los términos estén aceptados
+    if (!localStorage.getItem("terminosAceptados")) {
+      document.getElementById("terminosModal").style.display = "flex";
+      return;
+    }
+
+    // Busca el contenedor del producto
+    const productCard = btn.closest('.product-item');
+    if (!productCard) return;
+
+    // Obtiene título y precio
+    currentProduct.title = productCard.querySelector('.product-title').innerText;
+    currentProduct.price = productCard.querySelector('.product-price').innerText;
+
+    // Muestra modal de pago
+    const modal = document.getElementById('buyModal');
+    if (modal) modal.style.display = 'flex';
+
+    // Resetea selección previa
+    const paymentSelect = document.getElementById('paymentMethod');
+    const qrDiv = document.getElementById('qrDisplay');
+    const sendBtn = document.getElementById('sendWhatsApp');
+    if (paymentSelect) paymentSelect.selectedIndex = 0;
+    if (qrDiv) qrDiv.innerHTML = '';
+    if (sendBtn) sendBtn.disabled = true;
+  });
+});
+
+// Función para cerrar modal
+function closeModal() {
+  const modal = document.getElementById('buyModal');
+  if (modal) modal.style.display = 'none';
+
+  const qrDiv = document.getElementById('qrDisplay');
+  if (qrDiv) qrDiv.innerHTML = '';
+
+  const paymentSelect = document.getElementById('paymentMethod');
+  if (paymentSelect) paymentSelect.selectedIndex = 0;
 }
 
-/* Contenido del modal */
-.modal-content {
-  background: #fff;
-  padding: 25px 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 480px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  font-family: 'Segoe UI', sans-serif;
-  animation: fadeIn 0.3s ease-in-out;
-  position: relative;
+// Cerrar modal con botón 'x'
+document.querySelectorAll('.close').forEach(btn => {
+  btn.addEventListener('click', closeModal);
+});
+
+// Cerrar modal si clic fuera del contenido
+window.addEventListener('click', function(e) {
+  const modal = document.getElementById('buyModal');
+  if (e.target === modal) closeModal();
+});
+
+// Cerrar modal con tecla Escape
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+
+// Mostrar QR y habilitar botón enviar WhatsApp al seleccionar método de pago
+document.getElementById('paymentMethod').addEventListener('change', function() {
+  const method = this.value;
+  const qrMap = {
+    "BNB": "https://i.ibb.co/qLKP1Jm5/IMG-20250525-WA0000.jpg",
+    "Tigo Money": "https://i.ibb.co/67hBspQ1/IMG-20250525-WA0001.jpg",
+    "Yape": "https://i.ibb.co/XYZYAPE.png"
+  };
+
+  const qrDiv = document.getElementById('qrDisplay');
+  const sendBtn = document.getElementById('sendWhatsApp');
+
+  if (method && qrMap[method]) {
+    qrDiv.innerHTML = `<p>Escanea el QR de <strong>${method}</strong> para pagar:</p>
+                       <img src="${qrMap[method]}" alt="QR de ${method}" style="width: 200px; display: block; margin: 10px auto">`;
+    sendBtn.disabled = false;
+  } else {
+    qrDiv.innerHTML = '';
+    sendBtn.disabled = true;
+  }
+});
+
+// Enviar mensaje WhatsApp con info compra y método
+document.getElementById('sendWhatsApp').addEventListener('click', function() {
+  const method = document.getElementById('paymentMethod').value;
+  if (!method) {
+    alert('Por favor selecciona un método de pago.');
+    return;
+  }
+  const msg = `Hola, quiero confirmar la compra de *${currentProduct.title}* por *${currentProduct.price}*.\nHe pagado con *${method}*. Aquí adjunto el comprobante.`;
+  const url = `https://wa.me/59172386302?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+});
+
+// Mostrar modal de términos al cargar si no están aceptados
+document.addEventListener("DOMContentLoaded", function () {
+  if (!localStorage.getItem("terminosAceptados")) {
+    document.getElementById("terminosModal").style.display = "flex";
+  }
+});
+
+// Aceptar términos
+function aceptarTerminos() {
+  localStorage.setItem("terminosAceptados", "true");
+  document.getElementById("terminosModal").style.display = "none";
 }
 
-/* Animación de fade-in */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+// Rechazar términos
+function rechazarTerminos() {
+  alert("Debes aceptar los términos para continuar.");
+  window.location.href = "https://www.google.com";
 }
 
-/* Botón cerrar modal (X) */
-.close {
-  float: right;
-  cursor: pointer;
-  font-size: 24px;
-  font-weight: bold;
-  user-select: none;
-}
+// Menú toggle (si tienes menú)
+const menuToggle = document.getElementById('menuToggle');
+const popupMenu = document.getElementById('popupMenu');
 
-/* Selector de método de pago */
-#paymentMethod {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
+if (menuToggle && popupMenu) {
+  menuToggle.addEventListener('click', function() {
+    popupMenu.style.display = (popupMenu.style.display === 'block') ? 'none' : 'block';
+  });
 
-/* Contenedor QR */
-#qrDisplay {
-  margin-top: 15px;
-  text-align: center;
-}
-
-/* Botón enviar WhatsApp */
-.modal-footer {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-buy {
-  background-color: #0d6efd;
-}
-
-.btn-buy:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-/* Botones de Términos y Condiciones */
-.modal-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-evenly;
-  gap: 15px;
-}
-
-.btn-aceptar {
-  background-color: #198754;
-}
-
-.btn-aceptar:hover {
-  background-color: #157347;
-}
-
-.btn-rechazar {
-  background-color: #dc3545;
-}
-
-.btn-rechazar:hover {
-  background-color: #bb2d3b;
-}
-
-/* Texto con scroll en términos */
-.terminos-texto {
-  max-height: 300px;
-  overflow-y: auto;
-  text-align: left;
-  padding-right: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 15px;
+  window.addEventListener('click', function(event) {
+    if (!menuToggle.contains(event.target) && !popupMenu.contains(event.target)) {
+      popupMenu.style.display = 'none';
+    }
+  });
 }
