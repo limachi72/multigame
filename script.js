@@ -119,18 +119,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Botones aceptar / rechazar dentro del modal
+document.addEventListener("DOMContentLoaded", function () {
+  const aceptarBtn = document.getElementById("btnAceptarTerminos");
+  const rechazarBtn = document.getElementById("btnRechazarTerminos");
 
-// Aceptar términos
-function aceptarTerminos() {
-  localStorage.setItem("terminosAceptados", "true");
-  document.getElementById("terminosModal").style.display = "none";
-}
+  if (aceptarBtn) {
+    aceptarBtn.addEventListener("click", function () {
+      localStorage.setItem("terminosAceptados", "true");
+      const modal = document.getElementById("terminosModal");
+      if (modal) modal.style.display = "none";
+    });
+  }
 
-// Rechazar términos
-function rechazarTerminos() {
-  alert("Debes aceptar los términos para continuar.");
-  window.location.href = "https://www.google.com";
-}
+  if (rechazarBtn) {
+    rechazarBtn.addEventListener("click", function () {
+      alert("Debes aceptar los términos para continuar.");
+      window.location.href = "https://www.google.com";
+    });
+  }
+});
 
 // Menú toggle (si tienes menú)
 const menuToggle = document.getElementById('menuToggle');
