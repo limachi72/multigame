@@ -1,10 +1,16 @@
 
+/* Asegura que el cuerpo y el HTML usen toda la altura */
+html, body {
+  height: 100%;
+}
+
 body {  
   margin: 0;  
   font-family: Arial, sans-serif;  
   background: #f8f8f8;  
   color: #333;  
-}  
+}
+
   
 header {  
   background-color: #003366;  
@@ -278,4 +284,16 @@ section h2 {
   border: 1px solid #ddd;
   border-radius: 6px;
   margin-bottom: 15px;
+}
+/* Ajustes especiales para mostrar bien el modal en celulares */
+@media (max-width: 480px) {
+  .modal {
+    align-items: flex-start;
+    padding-top: 60px; /* espacio arriba para que no se corte */
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: auto;
+  }
 }
