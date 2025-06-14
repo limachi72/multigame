@@ -142,7 +142,7 @@
         <div class="product-container">
             <!-- Windows 8.1 Pro -->
             <div class="product-item">
-                <img src="windows-10-Pro.jpg" alt=" alt="Windows 8.1 Pro">
+                <img src="Windows-8-1-Pro.png" alt=" alt="Windows 8.1 Pro">
                 <h3 class="product-title">Windows 8.1 Pro</h3>
                 <p class="product-details">✅️ Activación Online.</p>
                 <p class="product-price">60 BS Bs | 6 $</p>
@@ -154,7 +154,7 @@
     
             <!-- Windows 10 Pro -->
             <div class="product-item">
-                <img src="https://i.ibb.co/0yYsvcB6/windows-10-Pro.jpg" alt="Windows 10 Pro">
+                <img src="windows-10-Pro.jpg" alt="Windows 10 Pro">
                 <h3 class="product-title">Windows 10 Pro</h3>
                 <p class="product-details">Licencia digital de uso permanente para 1 PC. Activación en línea.</p>
                 <p class="product-price">45 Bs | 4.5 $</p>
@@ -938,132 +938,57 @@
                     <a href="https://wa.me/59172386302?text=Quiero%20comprar%20Eset%20Smart%20Security%201%20Dispositivo%20-%202%20Años" class="btn btn-buy">Comprar</a>
                 </div>
             </div>
-       
- <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Compra y Términos</title>
-  <style>
-    /* Aquí va el CSS igual que antes */
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      display: none;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 25px 20px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 480px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      font-family: 'Segoe UI', sans-serif;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .modal-buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-evenly;
-      gap: 15px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 10px 0;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-aceptar {
-      background-color: #198754;
-    }
-
-    .btn-aceptar:hover {
-      background-color: #157347;
-    }
-
-    .btn-rechazar {
-      background-color: #dc3545;
-    }
-
-    .btn-rechazar:hover {
-      background-color: #bb2d3b;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Pie de página -->
-  <footer>
-    <p>&copy; 2024 Siglo XX - Todos los derechos reservados</p>
-  </footer>
-
-  <!-- Modal para método de pago -->
-  <div id="buyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="buyModalTitle">
-    <div class="modal-content">
-      <span class="close" style="float: right; cursor: pointer;" aria-label="Cerrar modal">×</span>
-      <h2 id="buyModalTitle">Selecciona método de pago</h2>
-      <select id="paymentMethod" aria-describedby="paymentHelp">
-        <option disabled selected>Elige una opción</option>
-        <option value="BNB">BNB</option>
-        <option value="Tigo Money">Tigo Money</option>
-        <option value="Yape">Yape</option>
-      </select>
-      <div id="qrDisplay" aria-live="polite" style="margin-top: 15px;"></div>
-      <div class="modal-footer" style="margin-top: 15px;">
-        <button id="sendWhatsApp" class="btn btn-buy" disabled>Enviar Comprobante por WhatsApp</button>
-      </div>
+  
+<!-- Modal para método de pago -->
+<div id="buyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="buyModalTitle">
+  <div class="modal-content">
+    <span class="close" style="float: right; cursor: pointer;" aria-label="Cerrar modal">×</span>
+    <h2 id="buyModalTitle">Selecciona método de pago</h2>
+    <select id="paymentMethod" aria-describedby="paymentHelp">
+      <option disabled selected>Elige una opción</option>
+      <option value="BNB">BNB</option>
+      <option value="Tigo Money">Tigo Money</option>
+      <option value="Yape">Yape</option>
+    </select>
+    <div id="qrDisplay" aria-live="polite" style="margin-top: 15px;"></div>
+    <div class="modal-footer" style="margin-top: 15px;">
+      <button id="sendWhatsApp" class="btn btn-buy" disabled>Enviar Comprobante por WhatsApp</button>
     </div>
   </div>
+</div>
 
-  <!-- Modal de Términos y Condiciones -->
-  <div id="terminosModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terminosTitle">
-    <div class="modal-content">
-      <h2 id="terminosTitle" style="margin-bottom: 15px;">Términos y Condiciones</h2>
-      <div class="terminos-texto" style="max-height: 300px; overflow-y: auto; text-align: left; padding-right: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px;">
-        <!-- Aquí el texto de términos y condiciones (igual que antes) -->
-        <p>Al acceder y utilizar este sitio web, el usuario acepta quedar obligado por los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te solicitamos no utilizar este sitio.</p>
-        <h3>Servicios Ofrecidos</h3>
-        <p>Ofrecemos productos digitales como licencias de software (Windows, Microsoft Office, entre otros), recargas electrónicas (Entel, Tigo, Viva), juegos y códigos digitales, y otros productos virtuales entregados electrónicamente. Es responsabilidad del usuario proporcionar correctamente sus datos.</p>
-        <h3>Entrega y Validación</h3>
-        <p>Una vez realizada la compra y confirmado el pago, el producto será entregado electrónicamente en un plazo de hasta 24 horas. El cliente debe revisar inmediatamente el producto al recibirlo. Después de la entrega, no se aceptan cambios ni devoluciones, salvo producto incorrecto o código inválido.</p>
-        <h3>Uso Correcto</h3>
-        <p>El cliente se compromete a usar los productos de forma legal y conforme a las políticas del proveedor. No nos hacemos responsables por mal uso o errores del cliente.</p>
-        <h3>Limitación de Responsabilidad</h3>
-        <p>No nos responsabilizamos por daños o perjuicios derivados del uso indebido, fallas en dispositivos o pérdida de acceso.</p>
-        <h3>Sin derecho a reclamo posterior</h3>
-        <p>Una vez entregado y verificado el producto, no habrá derecho a reclamos por motivos no atribuibles a nosotros.</p>
-        <h3>Cambios en los Términos</h3>
-        <p>Nos reservamos el derecho de modificar estos términos en cualquier momento.</p>
-        <h3>Legislación Aplicable</h3>
-        <p>Estos términos se rigen por las leyes del Estado Plurinacional de Bolivia.</p>
-      </div>
-      <div class="modal-buttons">
-        <button onclick="aceptarTerminos()" class="btn btn-aceptar">Aceptar</button>
-        <button onclick="rechazarTerminos()" class="btn btn-rechazar">Rechazar</button>
-      </div>
+<!-- Modal de Términos y Condiciones -->
+<div id="terminosModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="terminosTitle">
+  <div class="modal-content">
+    <h2 id="terminosTitle" style="margin-bottom: 15px;">Términos y Condiciones</h2>
+
+    <div class="terminos-texto" style="max-height: 300px; overflow-y: auto; text-align: left; padding-right: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px;">
+      <p>Al acceder y utilizar este sitio web, el usuario acepta quedar obligado por los presentes Términos y Condiciones. Si no estás de acuerdo con alguna parte, te solicitamos no utilizar este sitio.</p>
+      <h3>Servicios Ofrecidos</h3>
+      <p>Ofrecemos productos digitales como licencias de software (Windows, Microsoft Office, entre otros), recargas electrónicas (Entel, Tigo, Viva), juegos y códigos digitales, y otros productos virtuales entregados electrónicamente. Es responsabilidad del usuario proporcionar correctamente sus datos.</p>
+      <h3>Entrega y Validación</h3>
+      <p>Una vez realizada la compra y confirmado el pago, el producto será entregado electrónicamente en un plazo de hasta 24 horas. El cliente debe revisar inmediatamente el producto al recibirlo. Después de la entrega, no se aceptan cambios ni devoluciones, salvo producto incorrecto o código inválido.</p>
+      <h3>Uso Correcto</h3>
+      <p>El cliente se compromete a usar los productos de forma legal y conforme a las políticas del proveedor. No nos hacemos responsables por mal uso o errores del cliente.</p>
+      <h3>Limitación de Responsabilidad</h3>
+      <p>No nos responsabilizamos por daños o perjuicios derivados del uso indebido, fallas en dispositivos o pérdida de acceso.</p>
+      <h3>Sin derecho a reclamo posterior</h3>
+      <p>Una vez entregado y verificado el producto, no habrá derecho a reclamos por motivos no atribuibles a nosotros.</p>
+      <h3>Cambios en los Términos</h3>
+      <p>Nos reservamos el derecho de modificar estos términos en cualquier momento.</p>
+      <h3>Legislación Aplicable</h3>
+      <p>Estos términos se rigen por las leyes del Estado Plurinacional de Bolivia.</p>
+    </div>
+
+    <div class="modal-buttons">
+      <button onclick="aceptarTerminos()" class="btn btn-aceptar">Aceptar</button>
+      <button onclick="rechazarTerminos()" class="btn btn-rechazar">Rechazar</button>
     </div>
   </div>
+</div>
+<button id="btnTerminos" class="btn">Ver Términos y Condiciones</button>
+<script src="script.js"></script>
 
-  <!-- Aquí enlazas el JS externo -->
-  <script src="script.js"></script>
-</body>
-</html>
+<footer>
+  <p>&copy; 2024 Siglo XX - Todos los derechos reservados</p>
+</footer>

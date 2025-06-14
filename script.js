@@ -107,6 +107,18 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("terminosModal").style.display = "flex";
   }
 });
+// Activar el modal de Términos y Condiciones desde un botón visible
+document.addEventListener("DOMContentLoaded", function () {
+  const terminosBtn = document.getElementById("btnTerminos");
+  const terminosModal = document.getElementById("terminosModal");
+
+  if (terminosBtn && terminosModal) {
+    terminosBtn.addEventListener("click", function () {
+      terminosModal.style.display = "flex";
+    });
+  }
+});
+
 
 // Aceptar términos
 function aceptarTerminos() {
@@ -135,3 +147,30 @@ if (menuToggle && popupMenu) {
     }
   });
 }
+// === ACTIVADOR DEL POPUP MENU model ===
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("buyModal");
+  const openBtn = document.getElementById("btnAbrirModal"); // asegúrate que el botón tenga ese ID
+  const closeBtn = modal.querySelector(".close");
+
+  // Mostrar el modal
+  if (openBtn) {
+    openBtn.addEventListener("click", () => {
+      modal.style.display = "flex";
+    });
+  }
+
+  // Cerrar el modal
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  // Cerrar al hacer clic fuera del contenido
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});
